@@ -1,0 +1,25 @@
+services:
+  terraria:
+    image: ryshe/terraria:latest
+    container_name: terraria_server
+
+    ports:
+      - "${PORT}:7777"
+
+    volumes:
+      - ./world:/root/.local/share/Terraria/Worlds
+      - ./logs:/tshock/logs
+
+    command: >
+      -world /root/.local/share/Terraria/Worlds/${WORLD_NAME}.wld
+      -autocreate ${WORLD_SIZE}
+      -difficulty ${DIFFICULTY}
+      -evil ${EVIL}
+      -port 7777
+      -maxplayers ${MAX_PLAYERS}
+      -password ${PASSWORD}
+
+    stdin_open: true
+    tty: true
+
+    restart: unless-stopped
